@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Web App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 h-screen flex items-center justify-center">
+
+    <div class="bg-white bg-opacity-80 p-10 rounded-xl shadow-lg text-center space-y-8">
+        <!-- Logo -->
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="mx-auto w-24 h-24 rounded-full border-4 border-indigo-500 shadow-lg transform transition-all duration-300 hover:scale-110">
+
+        <!-- Page Title -->
+        <h1 class="text-3xl font-bold text-gray-800">Welcome to the Web App</h1>
+
+        <!-- Buttons -->
+        <div class="space-y-4">
+            <button onclick="window.location.href='/home'" class="w-full py-3 px-6 text-lg font-semibold text-white bg-indigo-500 rounded-lg transition transform hover:bg-indigo-600 hover:scale-105 focus:outline-none">
+    Home
+</button>
+
+            <button onclick="window.location.href='/icv'" class="w-full py-3 px-6 text-lg font-semibold text-white bg-indigo-500 rounded-lg transition transform hover:bg-indigo-600 hover:scale-105 focus:outline-none">
+                ICV
+            </button>
+            <button onclick="window.location.href='/simulator'" class="w-full py-3 px-6 text-lg font-semibold text-white bg-indigo-500 rounded-lg transition transform hover:bg-indigo-600 hover:scale-105 focus:outline-none">
+                Simulator
+            </button>
+            <button onclick="window.location.href='/best-practices'" class="w-full py-3 px-6 text-lg font-semibold text-white bg-indigo-500 rounded-lg transition transform hover:bg-indigo-600 hover:scale-105 focus:outline-none">
+                Best Practices
+            </button>
+            <button onclick="window.location.href='/games'" class="w-full py-3 px-6 text-lg font-semibold text-white bg-indigo-500 rounded-lg transition transform hover:bg-indigo-600 hover:scale-105 focus:outline-none">
+                Games
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

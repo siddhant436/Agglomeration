@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptography Project</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Adding Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 min-h-screen text-white">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-600 py-12 text-center">
+        <h1 class="text-5xl font-playfair text-white">Cryptography Algorithms</h1>
+        <p class="text-xl font-merriweather mt-4 text-gray-100">Explore RSA, AES, and SHA-256 cryptographic techniques used for secure communication and data integrity.</p>
+    </header>
+
+    <!-- Main Content Section -->
+    <div class="container mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+
+            <!-- RSA Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-500">
+                <img src="{{ url_for('static', filename='images/rsa.png') }}" alt="RSA Algorithm" class="mx-auto w-48 h-48 mb-6 rounded-lg shadow-xl">
+                <h2 class="text-3xl font-playfair text-gray-800">RSA Algorithm</h2>
+                <p class="mt-6 text-gray-700 font-merriweather">RSA is an asymmetric encryption algorithm that uses a public and a private key for secure data transmission. It's widely used in secure email and digital signatures.</p>
+            </div>
+
+            <!-- AES Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-500">
+                <img src="{{ url_for('static', filename='images/aes.png') }}" alt="AES Algorithm" class="mx-auto w-48 h-48 mb-6 rounded-lg shadow-xl">
+                <h2 class="text-3xl font-playfair text-gray-800">AES Algorithm</h2>
+                <p class="mt-6 text-gray-700 font-merriweather">AES (Advanced Encryption Standard) is a symmetric algorithm that is one of the most secure methods for encrypting sensitive data. It supports key sizes of 128, 192, and 256 bits.</p>
+            </div>
+
+            <!-- SHA-256 Section -->
+            <div class="bg-white p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition duration-500">
+                <img src="{{ url_for('static', filename='images/sha256.png') }}" alt="SHA-256 Algorithm" class="mx-auto w-48 h-48 mb-6 rounded-lg shadow-xl">
+                <h2 class="text-3xl font-playfair text-gray-800">SHA-256 Algorithm</h2>
+                <p class="mt-6 text-gray-700 font-merriweather">SHA-256 is a cryptographic hash function that generates a 256-bit signature for data integrity checks and is used in Bitcoin and many security protocols.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 py-8 text-center">
+        <p class="text-lg font-merriweather text-gray-100">Cryptography Project - Developed by Team GREEN</p>
+    </footer>
+
+</body>
+</html>

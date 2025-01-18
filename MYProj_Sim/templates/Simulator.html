@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptography Attack Lab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <div class="container text-center my-5">
+        <h1 class="display-4">Cryptography Attack Lab</h1>
+        <p class="lead">Learn about common cryptographic attacks with interactive simulations!</p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-danger btn-lg" id="mitmBtn">Simulate MITM Attack</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-warning btn-lg" id="replayBtn">Simulate Replay Attack</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-info btn-lg" id="dosBtn">Simulate DoS Attack</button>
+            </div>
+        </div>
+
+        <div id="attackResults" class="mt-5" style="display:none;">
+            <h3 id="attackTitle" class="text-danger"></h3>
+            <div id="attackDetails"></div>
+            <div id="attackSteps" class="mt-4"></div>
+            <button id="nextStepBtn" class="btn btn-info mt-3" style="display:none;">Next Step</button>
+            <button id="prevStepBtn" class="btn btn-secondary mt-3" style="display:none;">Previous Step</button>
+        </div>
+
+        <!-- Example Texts for MITM, Replay, DoS Attacks -->
+        <div id="mitmExample" class="mt-5" style="display:none;">
+            <h4>MITM Attack Example</h4>
+            <p><strong>Original:</strong> "This is the original text."</p>
+            <p><strong>MITM Attacked:</strong> "This is not the original text."</p>
+        </div>
+
+        <div id="replayExample" class="mt-5" style="display:none;">
+            <h4>Replay Attack Example</h4>
+            <p><strong>Original:</strong> "This is the original message."</p>
+            <p><strong>Replay Attacked:</strong> "This message was repeated at a later time."</p>
+        </div>
+
+        <div id="dosExample" class="mt-5" style="display:none;">
+            <h4>DoS Attack Example</h4>
+            <p><strong>Original:</strong> "The server is responsive and accessible."</p>
+            <p><strong>DoS Attacked:</strong> "The server is down due to too many requests."</p>
+        </div>
+
+        <!-- MITM Attack Quiz Modal -->
+        <div class="modal fade" id="mitmQuizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="quizModalLabel">Quick Quiz (MITM Attack)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="mitmQuizForm">
+                            <div class="quiz-question">
+                                <p>1. What is the main vulnerability exploited by MITM attacks?</p>
+                                <label><input type="radio" name="q1" value="1"> Key Exchange</label>
+                                <label><input type="radio" name="q1" value="0"> Authentication</label>
+                                <label><input type="radio" name="q1" value="0"> Encryption</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>2. What is a common defense against MITM attacks?</p>
+                                <label><input type="radio" name="q2" value="1"> SSL/TLS</label>
+                                <label><input type="radio" name="q2" value="0"> Basic Authentication</label>
+                                <label><input type="radio" name="q2" value="0"> MD5 hashing</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+                        </form>
+                        <div id="mitmQuizScore" class="mt-3" style="display:none;">
+                            <h5>Your Score: <span id="mitmScore"></span>/2</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Replay Attack Quiz Modal -->
+        <div class="modal fade" id="replayQuizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="quizModalLabel">Quick Quiz (Replay Attack)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="replayQuizForm">
+                            <div class="quiz-question">
+                                <p>1. What is the key issue behind replay attacks?</p>
+                                <label><input type="radio" name="q1" value="1"> Reused session tokens</label>
+                                <label><input type="radio" name="q1" value="0"> Weak password policies</label>
+                                <label><input type="radio" name="q1" value="0"> SQL Injection</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>2. Which method helps prevent replay attacks?</p>
+                                <label><input type="radio" name="q2" value="1"> Session expiration</label>
+                                <label><input type="radio" name="q2" value="0"> Plain text communication</label>
+                                <label><input type="radio" name="q2" value="0"> No encryption</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+                        </form>
+                        <div id="replayQuizScore" class="mt-3" style="display:none;">
+                            <h5>Your Score: <span id="replayScore"></span>/2</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DoS Attack Quiz Modal -->
+        <div class="modal fade" id="dosQuizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="quizModalLabel">Quick Quiz (DoS Attack)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="dosQuizForm">
+                            <div class="quiz-question">
+                                <p>1. What is the goal of a DoS attack?</p>
+                                <label><input type="radio" name="q1" value="1"> Overload the server</label>
+                                <label><input type="radio" name="q1" value="0"> Expose sensitive data</label>
+                                <label><input type="radio" name="q1" value="0"> Hijack a session</label>
+                            </div>
+                            <div class="quiz-question">
+                                <p>2. Which method can be used to mitigate a DoS attack?</p>
+                                <label><input type="radio" name="q2" value="1"> Rate limiting</label>
+                                <label><input type="radio" name="q2" value="0"> Encryption</label>
+                                <label><input type="radio" name="q2" value="0"> Firewall</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+                        </form>
+                        <div id="dosQuizScore" class="mt-3" style="display:none;">
+                            <h5>Your Score: <span id="dosScore"></span>/2</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
